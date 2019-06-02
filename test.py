@@ -7,7 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from PyQt5.QtGui import QTextCursor
+import MySQLdb as mdb
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -20,7 +21,7 @@ class Ui_MainWindow(object):
         self.pushButton.setGeometry(QtCore.QRect(80, 230, 631, 31))
         self.pushButton.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.pushButton.setObjectName("pushButton")
-        self.pushButton.clicked.connect(self.tes)
+        self.pushButton.clicked.connect(self.LoadData)
         self.textEdit_2 = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit_2.setGeometry(QtCore.QRect(330, 80, 381, 141))
         self.textEdit_2.setStyleSheet("background-color: rgb(255, 254, 235);")
@@ -76,8 +77,15 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-    def tes(self):
-        print("test")
+    def LoadData(self):
+        conn=mdb.connect(host="127.0.0.1",user="root",passwd="a201020102010",db="dbms")
+        cur=conn.cursor()
+        cur.execute("SELECT * FROM dbms.employee;")
+        for i in range(cur.rowcount):
+            result=cur.fetchall()
+            for row in result:
+                self.cursor=QTextCursor(self.textBrowser_4.document())
+                self.cursor.insertText(str(row)+'\n')
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
