@@ -1,9 +1,15 @@
-﻿from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QTextCursor
 import MySQLdb as mdb
 from PyQt5.QtWidgets import QLineEdit, QApplication, QMainWindow, QPushButton, QWidget
 import sys
 
+#這個code裡面有很多不同的class,每個class都是用來創建不同功能的介面
+#每個class裡面有三個主要的function ---- __init__,LoadData,retranslateUi
+#__init__和retranslateUi主要是做介面布置和event觸發
+#LoadData是用來與資料庫做連結
+
+#創建having的介面
 class having_page(QWidget):
     def __init__(self, parent=None):
         super(having_page, self).__init__(parent)
@@ -62,6 +68,7 @@ class having_page(QWidget):
         self.comboBox_8.setGeometry(QtCore.QRect(20, 10, 331, 21))
         self.comboBox_8.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.comboBox_8.setObjectName("comboBox_8")
+        self.comboBox_8.addItem("")
         self.comboBox_8.addItem("")
         self.comboBox_8.addItem("")
         self.comboBox_8.addItem("")
@@ -155,6 +162,7 @@ class having_page(QWidget):
         self.comboBox_12.addItem("")
         self.comboBox_12.addItem("")
         self.comboBox_12.addItem("")
+        self.comboBox_12.addItem("")
         self.lineEdit_2 = QtWidgets.QLineEdit(self.widget)
         self.lineEdit_2.setGeometry(QtCore.QRect(280, 260, 381, 41))
         self.lineEdit_2.setStyleSheet("background-color: rgb(255, 254, 235);")
@@ -183,6 +191,7 @@ class having_page(QWidget):
 
         self.retranslateUi(parent)
     def LoadData(self):
+        self.textBrowser_4.clear()
         if self.lineEdit.text()==1:
             text="SELECT "+self.comboBox_8.currentText()+","+self.comboBox_3.currentText()+"("+self.comboBox_12.currentText()+")"+" FROM "+self.comboBox_10.currentText()+" GROUP BY "+self.comboBox_8.currentText()+" HAVING "+self.comboBox_8.currentText()+"="+self.lineEdit_2.text()
         else:
@@ -240,7 +249,8 @@ class having_page(QWidget):
         self.comboBox_8.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_8.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_8.setItemText(17, _translate("MainWindow", "dorm_gender"))
-        self.comboBox_8.setItemText(18, _translate("MainWindow", "*"))
+        self.comboBox_8.setItemText(18, _translate("MainWindow", "plan_department"))
+        self.comboBox_8.setItemText(19, _translate("MainWindow", "*"))
         self.textBrowser_9.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -290,7 +300,11 @@ class having_page(QWidget):
         self.comboBox_12.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_12.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_12.setItemText(17, _translate("MainWindow", "dorm_gender"))
-        self.comboBox_12.setItemText(18, _translate("MainWindow", "*"))
+        self.comboBox_12.setItemText(18, _translate("MainWindow", "plan_department"))
+        self.comboBox_12.setItemText(19, _translate("MainWindow", "*"))
+        
+        
+#創建exist的介面
 class exist_page(QWidget):
     def __init__(self, parent=None):
         super(exist_page, self).__init__(parent)
@@ -373,6 +387,7 @@ class exist_page(QWidget):
         self.comboBox_8.addItem("")
         self.comboBox_8.addItem("")
         self.comboBox_8.addItem("")
+        self.comboBox_8.addItem("")
         self.textBrowser_9 = QtWidgets.QTextBrowser(self.widget)
         self.textBrowser_9.setGeometry(QtCore.QRect(30, 180, 231, 41))
         self.textBrowser_9.setStyleSheet("background-color: rgb(169, 221, 255);\n"
@@ -386,6 +401,7 @@ class exist_page(QWidget):
         self.comboBox_9.setGeometry(QtCore.QRect(20, 10, 331, 21))
         self.comboBox_9.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.comboBox_9.setObjectName("comboBox_9")
+        self.comboBox_9.addItem("")
         self.comboBox_9.addItem("")
         self.comboBox_9.addItem("")
         self.comboBox_9.addItem("")
@@ -469,6 +485,7 @@ class exist_page(QWidget):
         self.comboBox_6.addItem("")
         self.comboBox_6.addItem("")
         self.comboBox_6.addItem("")
+        self.comboBox_6.addItem("")
         self.textBrowser_8 = QtWidgets.QTextBrowser(self.widget)
         self.textBrowser_8.setGeometry(QtCore.QRect(30, 300, 231, 41))
         self.textBrowser_8.setStyleSheet("background-color: rgb(169, 221, 255);\n"
@@ -508,6 +525,7 @@ class exist_page(QWidget):
         self.retranslateUi(parent)
 
     def LoadData(self):
+        self.textBrowser_4.clear()
         text="SELECT "+self.comboBox_8.currentText()+" FROM "+self.comboBox_3.currentText()+" WHERE "+self.comboBox_11.currentText()+" (SELECT "+self.comboBox_9.currentText()+" FROM "+self.comboBox_10.currentText()+" WHERE "+self.comboBox_6.currentText()+"="+self.lineEdit.text()+")"
         self.textBrowser_4.clear()
         conn=mdb.connect(host="127.0.0.1",user="root",passwd="a201020102010",db="dbms")
@@ -567,7 +585,8 @@ class exist_page(QWidget):
         self.comboBox_8.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_8.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_8.setItemText(17, _translate("MainWindow", "dorm_gender"))
-        self.comboBox_8.setItemText(18, _translate("MainWindow", "*"))
+        self.comboBox_8.setItemText(18, _translate("MainWindow", "plan_department"))
+        self.comboBox_8.setItemText(19, _translate("MainWindow", "*"))
         self.textBrowser_9.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -591,7 +610,8 @@ class exist_page(QWidget):
         self.comboBox_9.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_9.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_9.setItemText(17, _translate("MainWindow", "dorm_gender"))
-        self.comboBox_9.setItemText(18, _translate("MainWindow", "*"))
+        self.comboBox_9.setItemText(18, _translate("MainWindow", "plan_department"))
+        self.comboBox_9.setItemText(19, _translate("MainWindow", "*"))
         self.textBrowser_10.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -632,13 +652,15 @@ class exist_page(QWidget):
         self.comboBox_6.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_6.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_6.setItemText(17, _translate("MainWindow", "dorm_gender"))
+        self.comboBox_6.setItemText(18, _translate("MainWindow", "plan_department"))
         self.textBrowser_8.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'微軟正黑體\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">查詢關鍵字</span></p></body></html>"))
         self.pushButton.setText(_translate("MainWindow", "Search"))
-        
+
+#創建in的介面
 class in_page(QWidget):
     def __init__(self, parent=None):
         super(in_page, self).__init__(parent)
@@ -725,6 +747,7 @@ class in_page(QWidget):
         self.comboBox_5.addItem("")
         self.comboBox_5.addItem("")
         self.comboBox_5.addItem("")
+        self.comboBox_5.addItem("")
         self.textBrowser_7 = QtWidgets.QTextBrowser(self.widget)
         self.textBrowser_7.setGeometry(QtCore.QRect(30, 60, 231, 41))
         self.textBrowser_7.setStyleSheet("background-color: rgb(169, 221, 255);\n"
@@ -757,6 +780,7 @@ class in_page(QWidget):
         self.comboBox_8.addItem("")
         self.comboBox_8.addItem("")
         self.comboBox_8.addItem("")
+        self.comboBox_8.addItem("")
         self.textBrowser_9 = QtWidgets.QTextBrowser(self.widget)
         self.textBrowser_9.setGeometry(QtCore.QRect(30, 220, 231, 41))
         self.textBrowser_9.setStyleSheet("background-color: rgb(169, 221, 255);\n"
@@ -770,6 +794,7 @@ class in_page(QWidget):
         self.comboBox_9.setGeometry(QtCore.QRect(20, 10, 331, 21))
         self.comboBox_9.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.comboBox_9.setObjectName("comboBox_9")
+        self.comboBox_9.addItem("")
         self.comboBox_9.addItem("")
         self.comboBox_9.addItem("")
         self.comboBox_9.addItem("")
@@ -846,6 +871,7 @@ class in_page(QWidget):
 
         self.retranslateUi(parent)
     def LoadData(self):
+        self.textBrowser_4.clear()
         text="SELECT "+self.comboBox_8.currentText()+" FROM "+self.comboBox_3.currentText()+" WHERE "+self.comboBox_5.currentText()+" "+self.comboBox_11.currentText()+" (SELECT "+self.comboBox_9.currentText()+" FROM "+self.comboBox_10.currentText()+")"
         self.textBrowser_4.clear()
         conn=mdb.connect(host="127.0.0.1",user="root",passwd="a201020102010",db="dbms")
@@ -906,6 +932,7 @@ class in_page(QWidget):
         self.comboBox_5.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_5.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_5.setItemText(17, _translate("MainWindow", "dorm_gender"))
+        self.comboBox_5.setItemText(18, _translate("MainWindow", "plan_department"))
         self.textBrowser_7.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -929,7 +956,8 @@ class in_page(QWidget):
         self.comboBox_8.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_8.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_8.setItemText(17, _translate("MainWindow", "dorm_gender"))
-        self.comboBox_8.setItemText(18, _translate("MainWindow", "*"))
+        self.comboBox_8.setItemText(18, _translate("MainWindow", "plan_department"))
+        self.comboBox_8.setItemText(19, _translate("MainWindow", "*"))
         self.textBrowser_9.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -953,7 +981,8 @@ class in_page(QWidget):
         self.comboBox_9.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_9.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_9.setItemText(17, _translate("MainWindow", "dorm_gender"))
-        self.comboBox_9.setItemText(18, _translate("MainWindow", "*"))
+        self.comboBox_9.setItemText(18, _translate("MainWindow", "plan_department"))
+        self.comboBox_9.setItemText(19, _translate("MainWindow", "*"))
         self.textBrowser_10.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -971,7 +1000,8 @@ class in_page(QWidget):
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">TYPE</span></p></body></html>"))
         self.comboBox_11.setItemText(0, _translate("MainWindow", "IN"))
         self.comboBox_11.setItemText(1, _translate("MainWindow", "NOT IN"))
-        
+
+#創建delete的介面
 class delete_page(QWidget):
     def __init__(self, parent=None):
         super(delete_page, self).__init__(parent)
@@ -1067,6 +1097,7 @@ class delete_page(QWidget):
         self.comboBox_5.addItem("")
         self.comboBox_5.addItem("")
         self.comboBox_5.addItem("")
+        self.comboBox_5.addItem("")
         self.widget.raise_()
         self.widget_2.raise_()
         self.textBrowser.raise_()
@@ -1141,6 +1172,10 @@ class delete_page(QWidget):
         self.comboBox_5.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_5.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_5.setItemText(17, _translate("MainWindow", "dorm_gender"))
+        self.comboBox_5.setItemText(18, _translate("MainWindow", "plan_department"))
+        
+        
+#創建update的介面
 class update_page(QWidget):
     def __init__(self, parent=None):
         super(update_page, self).__init__(parent)
@@ -1231,6 +1266,7 @@ class update_page(QWidget):
         self.comboBox_5.addItem("")
         self.comboBox_5.addItem("")
         self.comboBox_5.addItem("")
+        self.comboBox_5.addItem("")
         self.textBrowser_7 = QtWidgets.QTextBrowser(self.widget)
         self.textBrowser_7.setGeometry(QtCore.QRect(30, 160, 231, 51))
         self.textBrowser_7.setStyleSheet("background-color: rgb(169, 221, 255);\n"
@@ -1258,6 +1294,7 @@ class update_page(QWidget):
         self.comboBox_6.setGeometry(QtCore.QRect(20, 10, 331, 31))
         self.comboBox_6.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.comboBox_6.setObjectName("comboBox_6")
+        self.comboBox_6.addItem("")
         self.comboBox_6.addItem("")
         self.comboBox_6.addItem("")
         self.comboBox_6.addItem("")
@@ -1346,6 +1383,7 @@ class update_page(QWidget):
         self.comboBox_5.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_5.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_5.setItemText(17, _translate("MainWindow", "dorm_gender"))
+        self.comboBox_5.setItemText(18, _translate("MainWindow", "plan_department"))
         self.textBrowser_7.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1379,6 +1417,10 @@ class update_page(QWidget):
         self.comboBox_6.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_6.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_6.setItemText(17, _translate("MainWindow", "dorm_gender"))
+        self.comboBox_6.setItemText(18, _translate("MainWindow", "plan_department"))
+        
+        
+#創建insert的介面
 class insert_page(QWidget):
     def __init__(self, parent=None):
         super(insert_page, self).__init__(parent)
@@ -1534,6 +1576,8 @@ class insert_page(QWidget):
     def LoadData(self):
         if self.comboBox_3.currentIndex()==0:
             text="INSERT INTO "+self.comboBox_3.currentText()+" ("+self.information[0]+","+self.information[1]+","+self.information[2]+","+self.information[3]+","+self.information[4]+","+self.information[5]+","+self.information[6]+","+self.information[7]+","+self.information[8]+")"+" VALUES "+"("+"\""+self.lineEdit_6.text()+"\""+","+"\""+self.lineEdit_2.text()+"\""+","+"\""+self.lineEdit_3.text()+"\""+","+"\""+self.lineEdit_4.text()+"\""+","+"\""+self.lineEdit_5.text()+"\""+","+"\""+self.lineEdit_7.text()+"\""+","+"\""+self.lineEdit_10.text()+"\""+","+"\""+self.lineEdit_8.text()+"\""+","+"\""+self.lineEdit_9.text()+"\""+");"
+        elif self.comboBox_3.currentIndex()==4:
+            text="INSERT INTO "+self.comboBox_3.currentText()+" ("+self.information[0]+","+self.information[1]+","+self.information[2]+")"+" VALUES "+"("+"\""+self.lineEdit_6.text()+"\""+","+"\""+self.lineEdit_2.text()+"\""+","+"\""+self.lineEdit_3.text()+"\""+","+"\""+self.lineEdit_4.text()+"\""+");"
         else:
             text="INSERT INTO "+self.comboBox_3.currentText()+" ("+self.information[0]+","+self.information[1]+","+self.information[2]+")"+" VALUES "+"("+"\""+self.lineEdit_6.text()+"\""+","+"\""+self.lineEdit_2.text()+"\""+","+"\""+self.lineEdit_3.text()+"\""+");"
         conn=mdb.connect(host="127.0.0.1",user="root",passwd="a201020102010",db="dbms")
@@ -1552,7 +1596,7 @@ class insert_page(QWidget):
         elif self.comboBox_3.currentIndex()==3:
             self.information=["kid_id","age","kid_name","no","no","no","no","no","no"]
         elif self.comboBox_3.currentIndex()==4:
-            self.information=["plan_id","plan_name","plan_num_of_employee","no","no","no","no","no","no"]
+            self.information=["plan_id","plan_name","plan_num_of_employee","plan_department","no","no","no","no","no"]
         self.textBrowser_5.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1671,7 +1715,7 @@ class insert_page(QWidget):
 "</style></head><body style=\" font-family:\'微軟正黑體\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">"+self.information[8]+"</span></p></body></html>"))
         
-        
+#創建select的介面
 class select_page(QWidget):
     def __init__(self, parent=None):
         super(select_page, self).__init__(parent)
@@ -1767,6 +1811,7 @@ class select_page(QWidget):
         self.comboBox_5.addItem("")
         self.comboBox_5.addItem("")
         self.comboBox_5.addItem("")
+        self.comboBox_5.addItem("")
         self.textBrowser_7 = QtWidgets.QTextBrowser(self.widget)
         self.textBrowser_7.setGeometry(QtCore.QRect(30, 110, 231, 51))
         self.textBrowser_7.setStyleSheet("background-color: rgb(169, 221, 255);\n"
@@ -1780,6 +1825,7 @@ class select_page(QWidget):
         self.comboBox_8.setGeometry(QtCore.QRect(20, 10, 331, 31))
         self.comboBox_8.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.comboBox_8.setObjectName("comboBox_8")
+        self.comboBox_8.addItem("")
         self.comboBox_8.addItem("")
         self.comboBox_8.addItem("")
         self.comboBox_8.addItem("")
@@ -1851,7 +1897,6 @@ class select_page(QWidget):
         conn=mdb.connect(host="127.0.0.1",user="root",passwd="a201020102010",db="dbms")
         cur=conn.cursor()
         cur.execute(text)
-        print(type(self.lineEdit_2.text()))
         for i in range(cur.rowcount):
             result=cur.fetchall()
             for row in result:
@@ -1912,6 +1957,7 @@ class select_page(QWidget):
         self.comboBox_5.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_5.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_5.setItemText(17, _translate("MainWindow", "dorm_gender"))
+        self.comboBox_5.setItemText(18, _translate("MainWindow", "plan_department"))
         self.textBrowser_7.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1935,7 +1981,8 @@ class select_page(QWidget):
         self.comboBox_8.setItemText(15, _translate("MainWindow", "plan_name"))
         self.comboBox_8.setItemText(16, _translate("MainWindow", "dorm_area"))
         self.comboBox_8.setItemText(17, _translate("MainWindow", "dorm_gender"))
-        self.comboBox_8.setItemText(18, _translate("MainWindow", "*"))
+        self.comboBox_8.setItemText(18, _translate("MainWindow", "plan_department"))
+        self.comboBox_8.setItemText(19, _translate("MainWindow", "*"))
         self.textBrowser_8.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1948,7 +1995,7 @@ class select_page(QWidget):
         self.comboBox_4.setItemText(4, _translate("MainWindow", "MAX"))
         self.comboBox_4.setItemText(5, _translate("MainWindow", "MIN"))
 
-        
+#創建mysql的介面       
 class mysql_page(QWidget):
     def __init__(self, parent=None):
         super(mysql_page, self).__init__(parent)
@@ -2022,14 +2069,23 @@ class mysql_page(QWidget):
 
     def LoadData(self):
         self.textBrowser_4.clear()
-        conn=mdb.connect(host="127.0.0.1",user="root",passwd="a201020102010",db="dbms")
-        cur=conn.cursor()
-        cur.execute(self.lineEdit.text())
-        for i in range(cur.rowcount):
-            result=cur.fetchall()
-            for row in result:
-                self.cursor=QTextCursor(self.textBrowser_4.document())
-                self.cursor.insertText(str(row)+'\n')
+        temp=self.lineEdit.text()
+        get=temp.split(" ")
+        get=get[0]
+        if get=="SELECT":
+            conn=mdb.connect(host="127.0.0.1",user="root",passwd="a201020102010",db="dbms")
+            cur=conn.cursor()
+            cur.execute(self.lineEdit.text())
+            for i in range(cur.rowcount):
+                result=cur.fetchall()
+                for row in result:
+                    self.cursor=QTextCursor(self.textBrowser_4.document())
+                    self.cursor.insertText(str(row)+'\n')
+        else:
+            conn=mdb.connect(host="127.0.0.1",user="root",passwd="a201020102010",db="dbms")
+            cur=conn.cursor()
+            cur.execute(self.lineEdit.text())
+            conn.commit()
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -2054,6 +2110,8 @@ class mysql_page(QWidget):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'微軟正黑體\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'標楷體\'; font-size:18pt; font-weight:600;\">查詢工具</span></p></body></html>"))
+        
+#mainwindow,有各個介面的function
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
@@ -2115,6 +2173,7 @@ class MainWindow(QMainWindow):
         self.selecthaving.comboBox.currentIndexChanged.connect(lambda index=self.selecthaving.comboBox.currentIndex() : self.change(index))
         self.show()
         
+    #根據選取的功能,轉移到不同介面
     def change(self,index):
         if index==0:
             self.get_mysql()
